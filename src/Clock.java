@@ -1,13 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.Date;
+
 
 public class Clock extends JFrame {
 
     JLabel time = new JLabel();
-    Calendar calendar;
     String times;
     SimpleDateFormat timeFormat;
 
@@ -16,14 +17,13 @@ public class Clock extends JFrame {
         this.setSize(500,300);
         this.setResizable(false);
         this.setTitle("Clock");
-        this.setBackground(Color.BLACK);
+        this.setBackground(new Color(225,225,0));
         this.setVisible(true);
         this.add(time,BorderLayout.CENTER);
 
         time.setFont(new Font("Arial",Font.BOLD,70));
         time.setLayout(new BorderLayout());
 
-        timeFormat = new SimpleDateFormat("hh:mm:ss a");
 
         settingTime();
     }
@@ -31,12 +31,13 @@ public class Clock extends JFrame {
     public void settingTime() {
         while(true){
             times = timeFormat.format(Calendar.getInstance().getTime());
-            time.setText(times);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
+            time.setText(LocalTime.now().format(formatter));
 
             try{
                 Thread.sleep(1000);
             } catch (InterruptedException e){
-                e.printStackTrace();;
+                e.printStackTrace();
             }
 
         }
